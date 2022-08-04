@@ -1,0 +1,56 @@
+<meta charset="UTF-8">
+
+<h2>Construindo esquadros</h2>
+
+<canvas width="600" height="400"></canvas>
+<script>
+
+var tela = document.querySelector('canvas');
+var pincel = tela.getContext('2d');
+
+function desenhaEsquadro (xa, ya, xc, yc, cor) { //função definida no exercício.
+    
+    //Desenhando o triângulo preto.
+    pincel.fillStyle= cor;
+    pincel.beginPath();
+    var xb = xa; //declarando as variáveis para facilitar o entendimento dos cálculos.
+    var yb = yc;
+    pincel.moveTo(xa,ya);
+    pincel.lineTo(xb,yb);
+    pincel.lineTo(xc,yc);
+    pincel.fill();
+
+    //Desenhando o triângulo branco. Este deve ser proporcional às dimensões do triângulo preto.
+    pincel.fillStyle= "white"
+    pincel.beginPath();
+
+    //De acordo com o esquadro dado no exercício, onde os triângulos têm as seguintes dimensões:
+    //Preto: (A=50,50; B=50,400; C=400,400)
+    //Branco: (A'=100,175; B'=100,350; C'=275,350)
+    //Calculei a proporção entre os triângulos (50%) e a distribuição do triângulo branco dentro do preto.
+    //Isto é: 36% de distância entre A e A' e 14% de distância entre B e B'. Os outros 50% são preenchidos pelo triângulo branco.
+    //Assim:
+    var xap=xa+((xc-xb)*0.14); 
+    var yap=ya+(yb-ya)*0.36;
+    var xbp=xap
+    var ybp=yap+(yb-ya)*0.5;
+    var xcp=xap+(xc-xb)*0.5;
+    var ycp=ybp
+
+    pincel.moveTo(xap,yap);
+    pincel.lineTo(xbp,ybp);
+    pincel.lineTo(xcp,ycp);
+    pincel.fill();
+
+}
+
+function addTexto (texto, x, y) {
+
+pincel.font="20px Georgia";
+pincel.fillStyle="black";
+pincel.fillText(texto, x, y);
+}
+
+desenhaEsquadro (50, 50, 300, 300, "green");
+
+</Script>
